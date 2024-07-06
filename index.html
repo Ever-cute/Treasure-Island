@@ -13,6 +13,45 @@
             color: #333;
         }
 
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .container h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+
         .navbar {
             overflow: hidden;
             background-color: #333;
@@ -91,6 +130,88 @@
     </style>
 </head>
 <body>
+    <div class="container" id="auth-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <h2>Register</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-username">Username:</label>
+                <input type="text" id="register-username" required>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password:</label>
+                <input type="password" id="register-password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+        <div class="error" id="error-message"></div>
+    </div>
+    <div class="container" id="content-container" style="display:none;">
+        <h2>Protected Content</h2>
+        <p>This content is only visible to logged in users.</p>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const result = await response.json();
+            if (result.success) {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('content-container').style.display = 'block';
+            } else {
+                document.getElementById('error-message').innerText = result.message;
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+            const result = await response.json();
+            if (result.success) {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('content-container').style.display = 'block';
+            } else {
+                document.getElementById('error-message').innerText = result.message;
+            }
+        });
+    </script>
+
     <div class="navbar">
         <a class="active" href="#home">Home</a>
         <a href="#about">About</a>
@@ -128,7 +249,9 @@
                 <img src="kingdinner.jpg" alt="Image 2">
                 <div class="title">King's dinner on 7.5</div>
             </div>
-            <h2 id="contact">Contact</h2>
+        </div>
+           
+        <h2 id="contact">Contact</h2>
             <p>If you have any questions, feel free to <a href="mailto:Jinjch5@mail3.sysu.edu.cn@Treasure-Island.com">email me</a>.</p>    
     </div>
     
