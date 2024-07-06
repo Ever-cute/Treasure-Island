@@ -134,7 +134,20 @@
     </style>
 </head>
 <body>
-    <div id="login-form">
+    <div id="auth-form">
+        <h1>Register</h1>
+        <form id="registerForm">
+            <label for="registerUsername">Username:</label>
+            <input type="text" id="registerUsername" required>
+            <br>
+            <label for="registerEmail">Email:</label>
+            <input type="email" id="registerEmail" required>
+            <br>
+            <label for="registerPassword">Password:</label>
+            <input type="password" id="registerPassword" required>
+            <br>
+            <button type="submit">Register</button>
+        </form>
         <h1>Login</h1>
         <form id="loginForm">
             <label for="email">Email:</label>
@@ -154,6 +167,25 @@
     </div>
 
     <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        });
+
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -172,7 +204,7 @@
 
             if (result.success) {
                 localStorage.setItem('token', result.token);
-                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('auth-form').classList.add('hidden');
                 document.getElementById('content').classList.remove('hidden');
             } else {
                 alert(result.message);
@@ -183,11 +215,12 @@
         window.onload = function() {
             const token = localStorage.getItem('token');
             if (token) {
-                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('auth-form').classList.add('hidden');
                 document.getElementById('content').classList.remove('hidden');
             }
         };
     </script>
+ 
    
     <div class="navbar">
         <a class="active" href="#home">Home</a>

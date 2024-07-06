@@ -41,7 +41,7 @@ app.post('/register', (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(password, 8);
     users.push({ username, email, password: hashedPassword });
-    res.json({ success: true });
+    res.json({ success: true, message: 'Registration successful' });
 });
 
 // 用户登录
