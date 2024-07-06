@@ -70,7 +70,7 @@
 
             if (result.success) {
                 localStorage.setItem('token', result.token);
-                window.location.href = '/content.html'; // Redirect to content page
+                window.location.href = '/index.html'; // Redirect to index page
             } else {
                 alert(result.message);
             }
@@ -80,7 +80,7 @@
         window.onload = function() {
             const token = localStorage.getItem('token');
             if (token) {
-                window.location.href = '/content.html';
+                window.location.href = '/index.html';
             }
         };
     </script>
