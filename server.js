@@ -14,6 +14,7 @@ const secretKey = 'your_jwt_secret'; // 用于JWT签名的密钥
 
 app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from "public" directory
 
 // 配置Multer
 const storage = multer.diskStorage({
