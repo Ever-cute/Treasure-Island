@@ -178,5 +178,14 @@
             <p>If you have any questions, feel free to <a href="mailto:Jinjch5@mail3.sysu.edu.cn@Treasure-Island.com">email me</a>.</p>    
     </div>
     
+    <script>
+        // Check if the user is logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/auth.html';
+            }
+        };
+    </script>
 </body>
 </html>
