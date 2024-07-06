@@ -127,53 +127,39 @@
             margin-top: 10px;
         }
 
+        .hidden {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container" id="auth-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <div class="form-group">
-                <label for="login-email">Email:</label>
-                <input type="email" id="login-email" required>
-            </div>
-            <div class="form-group">
-                <label for="login-password">Password:</label>
-                <input type="password" id="login-password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Login</button>
-            </div>
+    <div id="login-form">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <br>
+            <button type="submit">Login</button>
         </form>
-        <h2>Register</h2>
-        <form id="register-form">
-            <div class="form-group">
-                <label for="register-username">Username:</label>
-                <input type="text" id="register-username" required>
-            </div>
-            <div class="form-group">
-                <label for="register-email">Email:</label>
-                <input type="email" id="register-email" required>
-            </div>
-            <div class="form-group">
-                <label for="register-password">Password:</label>
-                <input type="password" id="register-password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Register</button>
-            </div>
-        </form>
-        <div class="error" id="error-message"></div>
     </div>
-    <div class="container" id="content-container" style="display:none;">
-        <h2>Protected Content</h2>
-        <p>This content is only visible to logged in users.</p>
+
+    <div id="content" class="hidden">
+        <h1>Welcome to Treasure Island</h1>
+        <p>This is a simple static webpage for sharing life in Treasure Island.</p>
+        <!-- Add more content here -->
     </div>
+
     <script>
-        document.getElementById('login-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -181,37 +167,28 @@
                 },
                 body: JSON.stringify({ email, password })
             });
+
             const result = await response.json();
+
             if (result.success) {
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('content-container').style.display = 'block';
+                localStorage.setItem('token', result.token);
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
             } else {
-                document.getElementById('error-message').innerText = result.message;
+                alert(result.message);
             }
         });
 
-        document.getElementById('register-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const username = document.getElementById('register-username').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const response = await fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, email, password })
-            });
-            const result = await response.json();
-            if (result.success) {
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('content-container').style.display = 'block';
-            } else {
-                document.getElementById('error-message').innerText = result.message;
+        // Check if the user is already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
             }
-        });
+        };
     </script>
-
+   
     <div class="navbar">
         <a class="active" href="#home">Home</a>
         <a href="#about">About</a>
