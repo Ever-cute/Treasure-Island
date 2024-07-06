@@ -50,6 +50,24 @@
         ul {
             list-style-type: square;
         }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between; /* Optional: Add space between images */
+        }
+        .flex-item {
+            width: 45%; /* Adjust based on the number of images */
+            text-align: center; /* Center align text */
+        }
+        .flex-item img {
+            width: 100%; /* Make images responsive */
+            height: auto;
+        }
+        .title {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -76,10 +94,17 @@
         <img src="peaceandlove.jpg" alt="Description of the image">
         <figcaption>Treasure Island rule.</figcaption>
     </figure>
-    <p>Here is an image of King and Yin at the Grassland Music Festival:</p>
-    <figure>
-        <img src="music.jpg" alt="Description of the image">
-        <figcaption>This is King and Yin at 7.5.</figcaption>
-    </figure>
+
+    <div class="flex-container">
+        <div class="flex-item">
+            <img src="music.jpg" alt="Image 1">
+            <div class="Grassland Music Festival 0n 7.5">Title for Image 1</div>
+        </div>
+        <div class="flex-item">
+            <img src="kingdinner.jpg" alt="Image 2">
+            <div class="Qiqi King's dinner on 7.5">Title for Image 2</div>
+        </div>
+    </div>
+    
 </body>
 </html>
