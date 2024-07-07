@@ -36,16 +36,8 @@
             </form>
         </div>
     </div>
-
+    
     <script>
-        // Check if the user is already logged in
-        window.onload = function() {
-            const token = localStorage.getItem('token');
-            if (token) {
-                window.location.href = '/index.html';
-            }
-        };
-
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -89,5 +81,6 @@
             }
         });
     </script>
+
 </body>
 </html>
