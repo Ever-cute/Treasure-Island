@@ -4,177 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treasure Island - Auth</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-        }
-        .container h2 {
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #04AA6D;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .form-group button:hover {
-            background-color: #45a049;
-        }
-        .error {
-            color: red;
-            text-align: center;
-        }
-
-        .navbar {
-            overflow: hidden;
-            background-color: #333;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        .navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .navbar a.active {
-            background-color: #04AA6D;
-            color: white;
-        }
-        .content {
-            padding: 16px;
-            margin-top: 60px; /* Add a top margin to avoid content overlay */
-        }
-
-
-        h1 {
-            color: #5d5d5d;
-        }
-
-        p {
-            font-size: 16px;
-        }
-        img {
-            max-width: 50%;
-            height: auto;
-        }
-        figure {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        figcaption {
-            font-size: 14px;
-            color: #777;
-        }
-    
-        a {
-            color: #0066cc;
-        }
-        ul {
-            list-style-type: square;
-        }
-
-        .flex-container {
-            display: flex;
-            justify-content: space-between; /* Optional: Add space between images */
-        }
-        .flex-item {
-            width: 45%; /* Adjust based on the number of images */
-            text-align: center; /* Center align text */
-        }
-        .flex-item img {
-            width: 100%; /* Make images responsive */
-            height: auto;
-        }
-        .title {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div>
-        <h1>Register</h1>
-        <form id="registerForm">
-            <div class="form-group">
+    <div class="container">
+        <div class="form-container">
+            <h1>Register</h1>
+            <form id="registerForm">
                 <label for="registerUsername">Username:</label>
                 <input type="text" id="registerUsername" required>
-                
-            </div>
-            <div class="form-group">
+                <br>
                 <label for="registerEmail">Email:</label>
                 <input type="email" id="registerEmail" required>
-            </div>
-            <div class="form-group">
+                <br>
                 <label for="registerPassword">Password:</label>
                 <input type="password" id="registerPassword" required>
-            </div>
-            <div class="form-group">
+                <br>
                 <button type="submit">Register</button>
-            </div>
-        </form>
-
-        <h1>Login</h1>
-        <form id="loginForm">
-            </div class="form-group">
+            </form>
+        </div>
+        <div class="form-container">
+            <h1>Login</h1>
+            <form id="loginForm">
                 <label for="email">Email:</label>
                 <input type="email" id="email" required>
                 <br>
-            </div>
-            </div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" required>
                 <br>
-            </div>
-            </div class="form-group">
                 <button type="submit">Login</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <script>
+        // Check if the user is already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = '/index.html';
+            }
+        };
+
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -217,14 +88,6 @@
                 alert(result.message);
             }
         });
-
-        // Check if the user is already logged in
-        window.onload = function() {
-            const token = localStorage.getItem('token');
-            if (token) {
-                window.location.href = '/index.html';
-            }
-        };
     </script>
 </body>
 </html>
