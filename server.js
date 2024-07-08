@@ -60,7 +60,7 @@ app.post('/login', (req, res) => {
 
 // 保护中间件
 const authenticateToken = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const token = req.header('Authorization').replace('Bearer ', '');
 
     if (!token) {
         return res.status(401).json({ success: false, message: 'Access denied' });
@@ -81,7 +81,7 @@ app.post('/upload', authenticateToken, upload.single('photo'), (req, res) => {
 });
 
 // Serve protected content
-app.get('/content', authenticateToken, (req, res) => {
+app.get('/index', authenticateToken, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
