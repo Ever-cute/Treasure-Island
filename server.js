@@ -80,10 +80,6 @@ app.post('/upload', authenticateToken, upload.single('photo'), (req, res) => {
     res.json({ success: true, message: 'Photo uploaded successfully', file: req.file });
 });
 
-// Serve protected content
-app.get('/index', authenticateToken, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${PORT}`);
